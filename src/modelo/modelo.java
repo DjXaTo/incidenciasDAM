@@ -750,7 +750,7 @@ public class modelo extends conexion {
         int fila = 0;
         String[] nombre = {"DNI", "Nombre", "Apellidos", "Puesto", "Teléfono", "Email"};
         try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(dni) as total FROM empleado");
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(dni) as total FROM empleado where nombre = '" + nom + "'");
             ResultSet res = pstm.executeQuery();
             res.next();
             fila = res.getInt("total");

@@ -426,15 +426,16 @@ public class controlador implements ActionListener, MouseListener {
 
             //botones empresa
             case btnSelecLogo:
-                vista.frameFC.setVisible(true);
-                vista.frameFC.setSize(804, 502);
-                if (vista.fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
-                    f = vista.fcLogo.getSelectedFile();
+                fcLogo.setVisible(true);
+                fcLogo.setSize(804, 502);
+                if (fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
+                    f = fcLogo.getSelectedFile();
 
                 }
                 break;
 
             case btnAceptarEmpresa:
+                if (soloNumeros(vista.txtCifEmpresa.getText()) && soloNumeros(vista.txtTelEmpresa.getText()) && soloLetras(vista.txtNombreEmpresa.getText())){
                 consultas.insertarEmpresa(vista.txtCifEmpresa.getText(), vista.txtNombreEmpresa.getText(), vista.txtDirEmpresa.getText(),
                         vista.txtTelEmpresa.getText(), f);
                 JOptionPane.showMessageDialog(vista, "Se ha insertado la empresa correctamente.");
@@ -444,6 +445,9 @@ public class controlador implements ActionListener, MouseListener {
                 vista.panelEmpresa.setVisible(false);
                 Object[] s = consultas.getEmpresa();
                 vista.setIconImage((Image) s[4]);
+                } else {
+                    JOptionPane.showMessageDialog(vista, "Datos incorrectos");
+                } 
                 break;
 
             case btnCancelarEmpresa:
@@ -569,17 +573,17 @@ public class controlador implements ActionListener, MouseListener {
                 break;
 
             case btnSeleFotoEmpleAdmin:
-                vista.frameFC.setVisible(true);
-                vista.frameFC.setSize(804, 502);
-                if (vista.fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
-                    f = vista.fcLogo.getSelectedFile();
+                fcLogo.setVisible(true);
+                fcLogo.setSize(804, 502);
+                if (fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
+                    f = fcLogo.getSelectedFile();
 
                 }
                 break;
 
             case btnBuscarEmpleAdmin:
                 consultas.tablaBusqueda(vista.txtBusqEmpleado.getText());
-
+                vista.tablaEmpleados.setModel(consultas.tablaBusqueda(vista.txtBusqEmpleado.getText()));
                 break;
 
 //            //botones panel horario
@@ -695,10 +699,10 @@ public class controlador implements ActionListener, MouseListener {
                 break;
 
             case btnSeleFotoIncidencia:
-                vista.frameFC.setVisible(true);
-                vista.frameFC.setSize(804, 502);
-                if (vista.fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
-                    f = vista.fcLogo.getSelectedFile();
+                fcLogo.setVisible(true);
+                fcLogo.setSize(804, 502);
+                if (fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
+                    f = fcLogo.getSelectedFile();
 
                 }
                 break;
