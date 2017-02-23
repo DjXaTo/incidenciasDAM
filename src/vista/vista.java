@@ -33,19 +33,26 @@ public class vista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelLogin = new javax.swing.JPanel();
-        txtUserLogin = new org.edisoncor.gui.textField.TextField();
-        btnAceptLogin = new org.edisoncor.gui.button.ButtonSeven();
-        btnSalirLogin = new org.edisoncor.gui.button.ButtonSeven();
-        txtPassLogin = new org.edisoncor.gui.passwordField.PasswordField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        frameFC = new javax.swing.JFrame();
+        fcLogo = new javax.swing.JFileChooser();
+        panelEmpresa = new org.edisoncor.gui.panel.Panel();
+        jLabel5 = new javax.swing.JLabel();
+        txtCifEmpresa = new org.edisoncor.gui.textField.TextFieldRound();
+        jLabel6 = new javax.swing.JLabel();
+        txtNombreEmpresa = new org.edisoncor.gui.textField.TextFieldRound();
+        jLabel7 = new javax.swing.JLabel();
+        txtDirEmpresa = new org.edisoncor.gui.textField.TextFieldRound();
+        jLabel8 = new javax.swing.JLabel();
+        txtTelEmpresa = new org.edisoncor.gui.textField.TextFieldRound();
+        jLabel9 = new javax.swing.JLabel();
+        btnSelecLogo = new org.edisoncor.gui.button.ButtonAction();
+        btnAceptarEmpresa = new org.edisoncor.gui.button.ButtonAction();
+        btnCancelarEmpresa = new org.edisoncor.gui.button.ButtonAction();
         panelAdmin = new javax.swing.JPanel();
         tabbedPaneHeader = new org.edisoncor.gui.tabbedPane.TabbedPaneHeader();
         paneUsuarios = new org.edisoncor.gui.panel.Panel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
-        txtTipoUser = new org.edisoncor.gui.textField.TextFieldRound();
         txtEmailUser = new org.edisoncor.gui.textField.TextFieldRound();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
@@ -55,16 +62,16 @@ public class vista extends javax.swing.JFrame {
         btnModUser = new org.edisoncor.gui.button.ButtonAction();
         btnDeletUser = new org.edisoncor.gui.button.ButtonAction();
         jLabel3 = new javax.swing.JLabel();
+        cbTipoUsuario = new org.edisoncor.gui.comboBox.ComboBoxRound();
         paneHorariosAdmin = new org.edisoncor.gui.panel.Panel();
         jLabel54 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
-        txtDniTarea = new org.edisoncor.gui.comboBox.ComboBoxRectIcon();
+        cbDniTarea = new org.edisoncor.gui.comboBox.ComboBoxRectIcon();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
         jLabel59 = new javax.swing.JLabel();
         txtIdTarea = new org.edisoncor.gui.textField.TextFieldRound();
-        txtFechaTarea = new org.edisoncor.gui.textField.TextFieldRound();
         txtZonaTarea = new org.edisoncor.gui.textField.TextFieldRound();
         txtTramoHorario = new org.edisoncor.gui.textField.TextFieldRound();
         txtTarea = new org.edisoncor.gui.textField.TextFieldRound();
@@ -73,6 +80,7 @@ public class vista extends javax.swing.JFrame {
         btnAddTarea = new org.edisoncor.gui.button.ButtonAction();
         btnModTarea = new org.edisoncor.gui.button.ButtonAction();
         btnDeletTarea = new org.edisoncor.gui.button.ButtonAction();
+        dcFechaHorarioAdmin = new com.toedter.calendar.JDateChooser();
         paneIncidenAdmin = new org.edisoncor.gui.panel.Panel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaIncidencias = new javax.swing.JTable();
@@ -100,6 +108,8 @@ public class vista extends javax.swing.JFrame {
         cbEmpleIncidencias = new org.edisoncor.gui.comboBox.ComboBoxRound();
         btnInformeIncidencia = new org.edisoncor.gui.button.ButtonAction();
         btnAddFotoAdmin = new org.edisoncor.gui.button.ButtonRound();
+        fechaSucesoAdmin = new com.toedter.calendar.JDateChooser();
+        fechaResolucionAdmin = new com.toedter.calendar.JDateChooser();
         paneEmpleadosAdmin = new org.edisoncor.gui.panel.Panel();
         btnDeletEmple = new org.edisoncor.gui.button.ButtonAction();
         btnModEmple = new org.edisoncor.gui.button.ButtonAction();
@@ -121,6 +131,8 @@ public class vista extends javax.swing.JFrame {
         txtBusqEmpleado = new org.edisoncor.gui.textField.TextFieldRound();
         jLabel41 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cbFotoUser = new org.edisoncor.gui.comboBox.ComboBoxRound();
         panelEmple = new javax.swing.JPanel();
         tabbedPaneHeader3 = new org.edisoncor.gui.tabbedPane.TabbedPaneHeader();
         paneHorarioEmple = new org.edisoncor.gui.panel.Panel();
@@ -168,28 +180,121 @@ public class vista extends javax.swing.JFrame {
         cbIncidenEmple = new org.edisoncor.gui.comboBox.ComboBoxRound();
         btnInformeIncidencias = new org.edisoncor.gui.button.ButtonAction();
         btnAddFotoEmple = new org.edisoncor.gui.button.ButtonRound();
+        fechaSucesoEmple = new com.toedter.calendar.JDateChooser();
+        fechaResolucionEmple = new com.toedter.calendar.JDateChooser();
+        panelLogin = new javax.swing.JPanel();
+        txtUserLogin = new org.edisoncor.gui.textField.TextField();
+        btnAceptLogin = new org.edisoncor.gui.button.ButtonSeven();
+        btnSalirLogin = new org.edisoncor.gui.button.ButtonSeven();
+        txtPassLogin = new org.edisoncor.gui.passwordField.PasswordField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout frameFCLayout = new javax.swing.GroupLayout(frameFC.getContentPane());
+        frameFC.getContentPane().setLayout(frameFCLayout);
+        frameFCLayout.setHorizontalGroup(
+            frameFCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 804, Short.MAX_VALUE)
+            .addGroup(frameFCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(fcLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE))
+        );
+        frameFCLayout.setVerticalGroup(
+            frameFCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 502, Short.MAX_VALUE)
+            .addGroup(frameFCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(fcLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelLogin.add(txtUserLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 190, -1));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("CIF:");
 
-        btnAceptLogin.setText("Ingresar");
-        panelLogin.add(btnAceptLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 100, -1));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Nombre:");
 
-        btnSalirLogin.setText("Salir");
-        panelLogin.add(btnSalirLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 180, 100, -1));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Dirección:");
 
-        txtPassLogin.setText("passwordField1");
-        panelLogin.add(txtPassLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 190, -1));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Teléfono:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Usuario:");
-        panelLogin.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Logo:");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Pass:");
-        panelLogin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
+        btnSelecLogo.setText("Seleccionar archivo...");
+
+        btnAceptarEmpresa.setText("Aceptar");
+
+        btnCancelarEmpresa.setText("Cancelar");
+
+        javax.swing.GroupLayout panelEmpresaLayout = new javax.swing.GroupLayout(panelEmpresa);
+        panelEmpresa.setLayout(panelEmpresaLayout);
+        panelEmpresaLayout.setHorizontalGroup(
+            panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEmpresaLayout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelEmpresaLayout.createSequentialGroup()
+                        .addComponent(btnAceptarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelEmpresaLayout.createSequentialGroup()
+                        .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSelecLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelEmpresaLayout.createSequentialGroup()
+                        .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCifEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelEmpresaLayout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDirEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(284, Short.MAX_VALUE))
+        );
+        panelEmpresaLayout.setVerticalGroup(
+            panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEmpresaLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtCifEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtDirEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtTelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(btnSelecLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(261, Short.MAX_VALUE))
+        );
 
         panelAdmin.setPreferredSize(new java.awt.Dimension(1070, 607));
 
@@ -206,10 +311,10 @@ public class vista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaUsuarios.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(tablaUsuarios);
 
         paneUsuarios.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 23, 420, 524));
-        paneUsuarios.add(txtTipoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 46, 333, -1));
         paneUsuarios.add(txtEmailUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 89, 333, -1));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -240,6 +345,14 @@ public class vista extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/admin.png"))); // NOI18N
         paneUsuarios.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 280, 220, 260));
 
+        cbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0 - Administrador", "1 - Empleado" }));
+        cbTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoUsuarioActionPerformed(evt);
+            }
+        });
+        paneUsuarios.add(cbTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, 340, -1));
+
         tabbedPaneHeader.addTab("Admin", paneUsuarios);
 
         jLabel54.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -266,6 +379,10 @@ public class vista extends javax.swing.JFrame {
         jLabel59.setForeground(new java.awt.Color(255, 255, 255));
         jLabel59.setText("Tarea:");
 
+        txtIdTarea.setEditable(false);
+
+        txtTramoHorario.setToolTipText("");
+
         txtTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTareaActionPerformed(evt);
@@ -283,6 +400,7 @@ public class vista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaHorarios.getTableHeader().setReorderingAllowed(false);
         jScrollPane8.setViewportView(tablaHorarios);
 
         btnAddTarea.setText("AGREGAR");
@@ -303,7 +421,7 @@ public class vista extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneHorariosAdminLayout.createSequentialGroup()
                 .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(paneHorariosAdminLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(36, Short.MAX_VALUE)
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 932, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(paneHorariosAdminLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
@@ -312,15 +430,15 @@ public class vista extends javax.swing.JFrame {
                             .addComponent(jLabel55))
                         .addGap(18, 18, 18)
                         .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtFechaTarea, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                            .addComponent(txtIdTarea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtIdTarea, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                            .addComponent(dcFechaHorarioAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(71, 71, 71)
                         .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel56)
                             .addComponent(jLabel57))
                         .addGap(26, 26, 26)
                         .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDniTarea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbDniTarea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtZonaTarea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,22 +464,24 @@ public class vista extends javax.swing.JFrame {
             paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneHorariosAdminLayout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel54)
-                    .addComponent(txtDniTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel56)
-                    .addComponent(jLabel58)
-                    .addComponent(txtIdTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTramoHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel55)
-                    .addComponent(jLabel57)
-                    .addComponent(jLabel59)
-                    .addComponent(txtFechaTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtZonaTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(paneHorariosAdminLayout.createSequentialGroup()
+                        .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel54)
+                            .addComponent(cbDniTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel56)
+                            .addComponent(jLabel58)
+                            .addComponent(txtIdTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTramoHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel55)
+                            .addComponent(jLabel57)
+                            .addComponent(jLabel59)
+                            .addComponent(txtZonaTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(dcFechaHorarioAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(paneHorariosAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,6 +504,7 @@ public class vista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaIncidencias.getTableHeader().setReorderingAllowed(false);
         jScrollPane7.setViewportView(tablaIncidencias);
 
         jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -471,22 +592,34 @@ public class vista extends javax.swing.JFrame {
                                 .addComponent(txtTipoIncidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createSequentialGroup()
                             .addContainerGap()
-                            .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(paneIncidenAdminLayout.createSequentialGroup()
+                                        .addComponent(jLabel52)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbEmpleIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(paneIncidenAdminLayout.createSequentialGroup()
+                                        .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel51)
+                                            .addComponent(jLabel50))
+                                        .addGap(45, 45, 45)
+                                        .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtDescripcionIncide, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                                                .addComponent(txtLocalizacionInciden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(txtEstadoInciden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(txtPrioridadIncide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(paneIncidenAdminLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel48))
+                                    .addGroup(paneIncidenAdminLayout.createSequentialGroup()
+                                        .addComponent(jLabel46)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(fechaSucesoAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(paneIncidenAdminLayout.createSequentialGroup()
-                                    .addComponent(jLabel52)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbEmpleIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(paneIncidenAdminLayout.createSequentialGroup()
-                                    .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel51)
-                                        .addComponent(jLabel50))
-                                    .addGap(45, 45, 45)
-                                    .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtDescripcionIncide, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                                            .addComponent(txtLocalizacionInciden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtEstadoInciden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(txtPrioridadIncide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jLabel47)
+                                    .addGap(9, 9, 9)
+                                    .addComponent(fechaResolucionAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(paneIncidenAdminLayout.createSequentialGroup()
                         .addGap(592, 592, 592)
                         .addComponent(btnAddInciden, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -498,20 +631,11 @@ public class vista extends javax.swing.JFrame {
                         .addComponent(btnInformeIncidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(592, Short.MAX_VALUE)
                 .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(paneIncidenAdminLayout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(jLabel48))
-                        .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createSequentialGroup()
-                                .addComponent(jLabel47)
-                                .addGap(337, 337, 337))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createSequentialGroup()
-                                .addComponent(jLabel49)
-                                .addGap(363, 363, 363)))
-                        .addComponent(jLabel46))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createSequentialGroup()
+                        .addComponent(jLabel49)
+                        .addGap(363, 363, 363))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createSequentialGroup()
                         .addComponent(jLabel45)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -528,7 +652,7 @@ public class vista extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenAdminLayout.createSequentialGroup()
                 .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneIncidenAdminLayout.createSequentialGroup()
-                        .addContainerGap(24, Short.MAX_VALUE)
+                        .addContainerGap(26, Short.MAX_VALUE)
                         .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCodIncidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel42))
@@ -546,14 +670,18 @@ public class vista extends javax.swing.JFrame {
                     .addComponent(jLabel45)
                     .addComponent(btnAddFotoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel46)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel47)
-                .addGap(27, 27, 27)
-                .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDescripcionIncide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel48))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel46)
+                    .addComponent(fechaSucesoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel47)
+                    .addComponent(fechaResolucionAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel48, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtDescripcionIncide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneIncidenAdminLayout.createSequentialGroup()
                         .addComponent(jLabel49)
@@ -561,7 +689,7 @@ public class vista extends javax.swing.JFrame {
                         .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel50)
                             .addComponent(txtEstadoInciden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addGroup(paneIncidenAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPrioridadIncide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel51))
@@ -591,13 +719,13 @@ public class vista extends javax.swing.JFrame {
         paneEmpleadosAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnDeletEmple.setText("ELIMINAR");
-        paneEmpleadosAdmin.add(btnDeletEmple, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 480, 220, -1));
+        paneEmpleadosAdmin.add(btnDeletEmple, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 500, 220, -1));
 
         btnModEmple.setText("MODIFICAR");
-        paneEmpleadosAdmin.add(btnModEmple, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 410, 220, -1));
+        paneEmpleadosAdmin.add(btnModEmple, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 440, 220, -1));
 
         btnAddEmple.setText("INSERTAR");
-        paneEmpleadosAdmin.add(btnAddEmple, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 340, 220, -1));
+        paneEmpleadosAdmin.add(btnAddEmple, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 380, 220, -1));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(255, 255, 255));
@@ -646,6 +774,7 @@ public class vista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaEmpleados.getTableHeader().setReorderingAllowed(false);
         jScrollPane6.setViewportView(tablaEmpleados);
 
         paneEmpleadosAdmin.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 470, 480));
@@ -658,6 +787,12 @@ public class vista extends javax.swing.JFrame {
 
         jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user.png"))); // NOI18N
         paneEmpleadosAdmin.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, 240, 250));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Seleccione foto:");
+        paneEmpleadosAdmin.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, -1, -1));
+        paneEmpleadosAdmin.add(cbFotoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 330, 220, -1));
 
         tabbedPaneHeader.addTab("Empleados", paneEmpleadosAdmin);
 
@@ -702,6 +837,8 @@ public class vista extends javax.swing.JFrame {
         jLabel65.setForeground(new java.awt.Color(255, 255, 255));
         jLabel65.setText("Tarea:");
 
+        txtIdTareas.setEditable(false);
+
         txtZonaTareas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtZonaTareasActionPerformed(evt);
@@ -725,6 +862,7 @@ public class vista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaTareas.getTableHeader().setReorderingAllowed(false);
         jScrollPane9.setViewportView(tablaTareas);
 
         txtAddTareas.setText("AGREGAR");
@@ -821,6 +959,7 @@ public class vista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaIncidencias2.getTableHeader().setReorderingAllowed(false);
         jScrollPane10.setViewportView(tablaIncidencias2);
 
         jLabel66.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -887,19 +1026,6 @@ public class vista extends javax.swing.JFrame {
         paneIncidenEmple.setLayout(paneIncidenEmpleLayout);
         paneIncidenEmpleLayout.setHorizontalGroup(
             paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenEmpleLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel72))
-                    .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenEmpleLayout.createSequentialGroup()
-                            .addComponent(jLabel71)
-                            .addGap(337, 337, 337))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenEmpleLayout.createSequentialGroup()
-                            .addComponent(jLabel73)
-                            .addGap(363, 363, 363)))))
             .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
                 .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -920,13 +1046,16 @@ public class vista extends javax.swing.JFrame {
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenEmpleLayout.createSequentialGroup()
                                             .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(jLabel70)
-                                                .addComponent(jLabel69))
+                                                .addComponent(jLabel69)
+                                                .addComponent(jLabel71))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
                             .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtNomIncidencias, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                                 .addComponent(txtCodIncidencias, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                                 .addComponent(txtTipoIncidencias, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                .addComponent(btnAddFotoEmple, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(btnAddFotoEmple, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fechaSucesoEmple, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fechaResolucionEmple, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenEmpleLayout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -944,7 +1073,8 @@ public class vista extends javax.swing.JFrame {
                                             .addComponent(txtDescripcionIncideas, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                                             .addComponent(txtLocalizacionIncidencias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(txtEstadoIncidencias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(txtPrioridadIncidencias, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(txtPrioridadIncidencias, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel72))))
                     .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
                         .addGap(592, 592, 592)
                         .addComponent(btnAddIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -955,6 +1085,10 @@ public class vista extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnInformeIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(39, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenEmpleLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel73)
+                .addGap(363, 363, 363))
             .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
                     .addGap(16, 16, 16)
@@ -966,33 +1100,40 @@ public class vista extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneIncidenEmpleLayout.createSequentialGroup()
                 .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
-                        .addContainerGap(24, Short.MAX_VALUE)
-                        .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCodIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel66))
-                        .addGap(23, 23, 23)
-                        .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel67)
-                            .addComponent(txtNomIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(55, 55, 55))
-                    .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
-                        .addGap(106, 106, 106)
                         .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTipoIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel68))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel69)
-                    .addComponent(btnAddFotoEmple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel70)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel71)
-                .addGap(27, 27, 27)
+                            .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
+                                .addContainerGap(23, Short.MAX_VALUE)
+                                .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtCodIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel66))
+                                .addGap(23, 23, 23)
+                                .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel67)
+                                    .addComponent(txtNomIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(55, 55, 55))
+                            .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
+                                .addGap(106, 106, 106)
+                                .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTipoIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel68))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)))
+                        .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel69)
+                            .addComponent(btnAddFotoEmple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel70))
+                    .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(fechaSucesoEmple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23)
+                .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel71)
+                    .addComponent(fechaResolucionEmple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDescripcionIncideas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel72))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneIncidenEmpleLayout.createSequentialGroup()
                         .addComponent(jLabel73)
@@ -1000,7 +1141,7 @@ public class vista extends javax.swing.JFrame {
                         .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel74)
                             .addComponent(txtEstadoIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addGroup(paneIncidenEmpleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPrioridadIncidencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel75))
@@ -1038,11 +1179,29 @@ public class vista extends javax.swing.JFrame {
             .addComponent(tabbedPaneHeader3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        panelLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelLogin.add(txtUserLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 190, -1));
+
+        btnAceptLogin.setText("Ingresar");
+        panelLogin.add(btnAceptLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 100, -1));
+
+        btnSalirLogin.setText("Salir");
+        panelLogin.add(btnSalirLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 180, 100, -1));
+        panelLogin.add(txtPassLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 190, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Usuario:");
+        panelLogin.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Pass:");
+        panelLogin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE)
+            .addGap(0, 1070, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1052,11 +1211,21 @@ public class vista extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(panelEmple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+            .addGap(0, 607, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1066,6 +1235,16 @@ public class vista extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(panelEmple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1095,6 +1274,10 @@ public class vista extends javax.swing.JFrame {
     private void btnDeletTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletTareaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeletTareaActionPerformed
+
+    private void cbTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTipoUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1133,6 +1316,7 @@ public class vista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public org.edisoncor.gui.button.ButtonSeven btnAceptLogin;
+    public org.edisoncor.gui.button.ButtonAction btnAceptarEmpresa;
     public org.edisoncor.gui.button.ButtonAction btnAddEmple;
     public org.edisoncor.gui.button.ButtonRound btnAddFotoAdmin;
     public org.edisoncor.gui.button.ButtonRound btnAddFotoEmple;
@@ -1140,6 +1324,7 @@ public class vista extends javax.swing.JFrame {
     public org.edisoncor.gui.button.ButtonAction btnAddIncidencias;
     public org.edisoncor.gui.button.ButtonAction btnAddTarea;
     public org.edisoncor.gui.button.ButtonAction btnAddUser;
+    public org.edisoncor.gui.button.ButtonAction btnCancelarEmpresa;
     public org.edisoncor.gui.button.ButtonAction btnDeletEmple;
     public org.edisoncor.gui.button.ButtonAction btnDeletIncide;
     public org.edisoncor.gui.button.ButtonAction btnDeletIncidencias;
@@ -1154,9 +1339,20 @@ public class vista extends javax.swing.JFrame {
     public org.edisoncor.gui.button.ButtonAction btnModTareas;
     public org.edisoncor.gui.button.ButtonAction btnModUser;
     public org.edisoncor.gui.button.ButtonSeven btnSalirLogin;
+    public org.edisoncor.gui.button.ButtonAction btnSelecLogo;
+    public org.edisoncor.gui.comboBox.ComboBoxRectIcon cbDniTarea;
     public org.edisoncor.gui.comboBox.ComboBoxRectIcon cbDniTareas;
     public org.edisoncor.gui.comboBox.ComboBoxRound cbEmpleIncidencias;
+    public org.edisoncor.gui.comboBox.ComboBoxRound cbFotoUser;
     public org.edisoncor.gui.comboBox.ComboBoxRound cbIncidenEmple;
+    public org.edisoncor.gui.comboBox.ComboBoxRound cbTipoUsuario;
+    public com.toedter.calendar.JDateChooser dcFechaHorarioAdmin;
+    public javax.swing.JFileChooser fcLogo;
+    public com.toedter.calendar.JDateChooser fechaResolucionAdmin;
+    public com.toedter.calendar.JDateChooser fechaResolucionEmple;
+    public com.toedter.calendar.JDateChooser fechaSucesoAdmin;
+    public com.toedter.calendar.JDateChooser fechaSucesoEmple;
+    public javax.swing.JFrame frameFC;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
@@ -1168,6 +1364,7 @@ public class vista extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel37;
     public javax.swing.JLabel jLabel38;
     public javax.swing.JLabel jLabel39;
+    public javax.swing.JLabel jLabel4;
     public javax.swing.JLabel jLabel40;
     public javax.swing.JLabel jLabel41;
     public javax.swing.JLabel jLabel42;
@@ -1178,6 +1375,7 @@ public class vista extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel47;
     public javax.swing.JLabel jLabel48;
     public javax.swing.JLabel jLabel49;
+    public javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabel50;
     public javax.swing.JLabel jLabel51;
     public javax.swing.JLabel jLabel52;
@@ -1188,6 +1386,7 @@ public class vista extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel57;
     public javax.swing.JLabel jLabel58;
     public javax.swing.JLabel jLabel59;
+    public javax.swing.JLabel jLabel6;
     public javax.swing.JLabel jLabel60;
     public javax.swing.JLabel jLabel61;
     public javax.swing.JLabel jLabel62;
@@ -1198,6 +1397,7 @@ public class vista extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel67;
     public javax.swing.JLabel jLabel68;
     public javax.swing.JLabel jLabel69;
+    public javax.swing.JLabel jLabel7;
     public javax.swing.JLabel jLabel70;
     public javax.swing.JLabel jLabel71;
     public javax.swing.JLabel jLabel72;
@@ -1205,6 +1405,8 @@ public class vista extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel74;
     public javax.swing.JLabel jLabel75;
     public javax.swing.JLabel jLabel76;
+    public javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel jLabel9;
     public javax.swing.JScrollPane jScrollPane10;
     public javax.swing.JScrollPane jScrollPane5;
     public javax.swing.JScrollPane jScrollPane6;
@@ -1219,6 +1421,7 @@ public class vista extends javax.swing.JFrame {
     public org.edisoncor.gui.panel.Panel paneUsuarios;
     public javax.swing.JPanel panelAdmin;
     public javax.swing.JPanel panelEmple;
+    public org.edisoncor.gui.panel.Panel panelEmpresa;
     public javax.swing.JPanel panelLogin;
     public org.edisoncor.gui.tabbedPane.TabbedPaneHeader tabbedPaneHeader;
     public org.edisoncor.gui.tabbedPane.TabbedPaneHeader tabbedPaneHeader3;
@@ -1231,18 +1434,18 @@ public class vista extends javax.swing.JFrame {
     public org.edisoncor.gui.button.ButtonAction txtAddTareas;
     public org.edisoncor.gui.textField.TextFieldRound txtApeEmple;
     public org.edisoncor.gui.textField.TextFieldRound txtBusqEmpleado;
+    public org.edisoncor.gui.textField.TextFieldRound txtCifEmpresa;
     public org.edisoncor.gui.textField.TextFieldRound txtCodIncidencia;
     public org.edisoncor.gui.textField.TextFieldRound txtCodIncidencias;
     public org.edisoncor.gui.button.ButtonAction txtDeletTareas;
     public org.edisoncor.gui.textField.TextFieldRound txtDescripcionIncide;
     public org.edisoncor.gui.textField.TextFieldRound txtDescripcionIncideas;
+    public org.edisoncor.gui.textField.TextFieldRound txtDirEmpresa;
     public org.edisoncor.gui.textField.TextFieldRound txtDniEmple;
-    public org.edisoncor.gui.comboBox.ComboBoxRectIcon txtDniTarea;
     public org.edisoncor.gui.textField.TextFieldRound txtEmailEmple;
     public org.edisoncor.gui.textField.TextFieldRound txtEmailUser;
     public org.edisoncor.gui.textField.TextFieldRound txtEstadoInciden;
     public org.edisoncor.gui.textField.TextFieldRound txtEstadoIncidencias;
-    public org.edisoncor.gui.textField.TextFieldRound txtFechaTarea;
     public org.edisoncor.gui.textField.TextFieldRound txtFechaTareas;
     public org.edisoncor.gui.textField.TextFieldRound txtIdTarea;
     public org.edisoncor.gui.textField.TextFieldRound txtIdTareas;
@@ -1251,6 +1454,7 @@ public class vista extends javax.swing.JFrame {
     public org.edisoncor.gui.textField.TextFieldRound txtNomEmple;
     public org.edisoncor.gui.textField.TextFieldRound txtNomIncidencia;
     public org.edisoncor.gui.textField.TextFieldRound txtNomIncidencias;
+    public org.edisoncor.gui.textField.TextFieldRound txtNombreEmpresa;
     public org.edisoncor.gui.passwordField.PasswordField txtPassLogin;
     public org.edisoncor.gui.textField.TextFieldRound txtPassUser;
     public org.edisoncor.gui.textField.TextFieldRound txtPrioridadIncide;
@@ -1258,9 +1462,9 @@ public class vista extends javax.swing.JFrame {
     public org.edisoncor.gui.textField.TextFieldRound txtPuestoEmple;
     public org.edisoncor.gui.textField.TextFieldRound txtTarea;
     public org.edisoncor.gui.textField.TextFieldRound txtTareas;
+    public org.edisoncor.gui.textField.TextFieldRound txtTelEmpresa;
     public org.edisoncor.gui.textField.TextFieldRound txtTipoIncidencia;
     public org.edisoncor.gui.textField.TextFieldRound txtTipoIncidencias;
-    public org.edisoncor.gui.textField.TextFieldRound txtTipoUser;
     public org.edisoncor.gui.textField.TextFieldRound txtTlfnoEmple;
     public org.edisoncor.gui.textField.TextFieldRound txtTramoHorario;
     public org.edisoncor.gui.textField.TextFieldRound txtTramoHorarios;

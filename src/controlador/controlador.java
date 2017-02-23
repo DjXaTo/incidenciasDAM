@@ -1,20 +1,22 @@
 package controlador;
 
-import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import modelo.modelo;
 import vista.vista;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.BorderFactory;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class controlador implements ActionListener {
+public class controlador implements ActionListener, MouseListener {
 
     private final vista vista;
     private final modelo consultas;
@@ -26,9 +28,32 @@ public class controlador implements ActionListener {
         this.consultas = new modelo();
     }
 
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 
     public enum AccionMVC {
 
+        //botones empresa
+        btnSelecLogo,
+        btnAceptarEmpresa,
+        btnCancelarEmpresa,
         //botones menú superior
         labelUser,
         labelEmple,
@@ -59,7 +84,10 @@ public class controlador implements ActionListener {
 
         btnAddTarea,
         btnModTarea,
-        btnDeletTarea
+        btnDeletTarea,
+        //tablas
+        tablaUsuario,
+        tablaPlanning
 
     }
 
@@ -70,11 +98,32 @@ public class controlador implements ActionListener {
         Toolkit t = Toolkit.getDefaultToolkit();
         //vista.setIconImage(t.getImage(getClass().getResourcer("/imagenes/logo.png")));
 
+        if (consultas.existeEmpresa() == false) {
+            vista.panelEmpresa.setVisible(true);
+            vista.panelAdmin.setVisible(false);
+            vista.panelEmple.setVisible(false);
+            vista.panelLogin.setVisible(false);
+        } else {
+            vista.panelEmpresa.setVisible(false);
+            vista.panelAdmin.setVisible(false);
+            vista.panelEmple.setVisible(false);
+            vista.panelLogin.setVisible(true);
+        }
         //modificamos el titulo de las ventanas de la aplicacion
         vista.pack();
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
         vista.setTitle("Incidencias Carmona");
+        vista.tablaEmpleados.setModel(consultas.verEmpleados());
+        vista.tablaHorarios.setModel(consultas.verTareas());
+        vista.tablaIncidencias.setModel(consultas.listarIncidencias());
+        vista.tablaIncidencias2.setModel(consultas.listarIncidencias());
+        vista.tablaTareas.setModel(consultas.verTareas());
+        vista.tablaUsuarios.setModel(consultas.verUsuarios());
+        vista.cbDniTareas.setModel(consultas.cbDniEmpleados());
+        vista.cbDniTarea.setModel(consultas.cbDniEmpleados());
+        vista.cbEmpleIncidencias.setModel(consultas.cbEmpleados());
+        vista.cbIncidenEmple.setModel(consultas.cbEmpleados());
 
         //ajusgamos el tamaño de las imagenes a sus contenedores (labels)
         /* ejemplo
@@ -280,6 +329,16 @@ public class controlador implements ActionListener {
          */
 
         //controlamos los botones de la aplicacion
+        //panel empresa
+        vista.btnSelecLogo.setActionCommand("btnSelecLogo");
+        vista.btnSelecLogo.addActionListener(this);
+
+        vista.btnAceptarEmpresa.setActionCommand("btnAceptarEmpresa");
+        vista.btnAceptarEmpresa.addActionListener(this);
+
+        vista.btnCancelarEmpresa.setActionCommand("btnCancelarEmpresa");
+        vista.btnCancelarEmpresa.addActionListener(this);
+
         //panel login
         vista.btnAceptLogin.setActionCommand("btnAceptLogin");
         vista.btnAceptLogin.addActionListener(this);
@@ -326,6 +385,12 @@ public class controlador implements ActionListener {
 
         vista.btnDeletTarea.setActionCommand("btnDeletTarea");
         vista.btnDeletTarea.addActionListener(this);
+
+        vista.tablaUsuarios.addMouseListener(this);
+        vista.tablaUsuarios.setName("tablaUsuario");
+
+        vista.tablaHorarios.addMouseListener(this);
+        vista.tablaHorarios.setName("tablaPlanning");
     }
 
     //acciones de los botones
@@ -333,20 +398,40 @@ public class controlador implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (AccionMVC.valueOf(e.getActionCommand())) {
 
+            //botones empresa
+            case btnSelecLogo:
+                vista.frameFC.setVisible(true);
+                vista.frameFC.setSize(804, 502);
+                break;
+
+            case btnAceptarEmpresa:
+                consultas.insertarEmpresa(vista.txtCifEmpresa.getText(), vista.txtNombreEmpresa.getText(), vista.txtDirEmpresa.getText(),
+                        vista.txtTelEmpresa.getText(), vista.fcLogo.getSelectedFile());
+                JOptionPane.showMessageDialog(vista, "Se ha insertado la empresa correctamente.");
+                vista.panelLogin.setVisible(true);
+                vista.panelAdmin.setVisible(false);
+                vista.panelEmple.setVisible(false);
+                vista.panelEmpresa.setVisible(false);
+                break;
+
+            case btnCancelarEmpresa:
+                System.exit(0);
+                break;
+
             //botones login
             case btnAceptLogin:
                 if (consultas.existeUsuario(vista.txtUserLogin.getText(), vista.txtPassLogin.getText())) {
-                    if (consultas.tipoUsuario(vista.txtUserLogin.getText()) == 1){
-                    JOptionPane.showMessageDialog(vista, "Logueo con exito");
-                    vista.panelLogin.setVisible(false);
-                    vista.panelAdmin.setVisible(true);
-                    vista.panelEmple.setVisible(false);
-                    } else if (consultas.tipoUsuario(vista.txtUserLogin.getText()) == 0){
-                    JOptionPane.showMessageDialog(vista, "Logueo con exito");
-                    vista.panelLogin.setVisible(false);
-                    vista.panelAdmin.setVisible(false);
-                    vista.panelEmple.setVisible(true);
-                    } else if (consultas.tipoUsuario(vista.txtUserLogin.getText()) == -1){
+                    if (consultas.tipoUsuario(vista.txtUserLogin.getText()) == 0) {
+                        JOptionPane.showMessageDialog(vista, "Logueo con exito");
+                        vista.panelLogin.setVisible(false);
+                        vista.panelAdmin.setVisible(true);
+                        vista.panelEmple.setVisible(false);
+                    } else if (consultas.tipoUsuario(vista.txtUserLogin.getText()) == 1) {
+                        JOptionPane.showMessageDialog(vista, "Logueo con exito");
+                        vista.panelLogin.setVisible(false);
+                        vista.panelAdmin.setVisible(false);
+                        vista.panelEmple.setVisible(true);
+                    } else if (consultas.tipoUsuario(vista.txtUserLogin.getText()) == -1) {
                         JOptionPane.showMessageDialog(vista, "Ese usuario no tiene tipo");
                     }
                 } else {
@@ -356,88 +441,252 @@ public class controlador implements ActionListener {
             case btnSalirLogin:
                 System.exit(0);
                 break;
-/*
+
             //botones panel usuario
             case btnAddUser:
-                consultas.existeUsuario();
-                if (consultas.existeUsuario() == 0) {
-                    consultas.insertarUsuario()
+                if (consultas.existeUsuarioSinPass(vista.txtEmailUser.getText()) == false) {
+                    String tipoU = "";
+                    if (vista.cbTipoUsuario.getSelectedIndex() == 0) {
+                        tipoU = "0";
+                    } else if (vista.cbTipoUsuario.getSelectedIndex() == 1) {
+                        tipoU = "1";
+                    }
+                    consultas.insertarUsuario(tipoU, vista.txtPassUser.getText(), vista.txtEmailUser.getText());
+                    vista.tablaUsuarios.setModel(consultas.verUsuarios());
+                    vista.txtPassUser.setText("");
+                    vista.txtEmailUser.setText("");
                 } else {
                     System.out.println("Ya existe el usuario");
                 }
                 break;
             case btnModUser:
-                consultas.actualizarUsuario();
-                break;
-            case btnDeletUser:
-                consultas.eliminarUsuario();
-                break;
-
-            //botones panel empleado
-            case btnAddEmple:
-                consultas.existeEmpleado();
-                if (consultas.existeEmpleado() == 0) {
-                    consultas.insertarEmpleado()
+                if (consultas.existeUsuarioSinPass(vista.txtEmailUser.getText()) == true) {
+                    consultas.actualizarUsuario(String.valueOf(vista.cbTipoUsuario.getSelectedIndex()), vista.txtPassUser.getText(), vista.txtEmailUser.getText());
+                    vista.tablaUsuarios.setModel(consultas.verUsuarios());
+                    vista.txtPassUser.setText("");
+                    vista.txtEmailUser.setText("");
+                    vista.txtEmailUser.setEditable(true);
                 } else {
-                    System.out.println("Ya existe el empleado");
+                    System.out.println("No existe el usuario");
                 }
                 break;
+            case btnDeletUser:
+                if (consultas.existeUsuarioSinPass(vista.txtEmailUser.getText()) == true) {
+                    consultas.eliminarUsuario(vista.txtEmailUser.getText());
+                    vista.tablaUsuarios.setModel(consultas.verUsuarios());
+                    vista.txtPassUser.setText("");
+                    vista.txtEmailUser.setText("");
+                    vista.txtEmailUser.setEditable(true);
+                } else {
+                    System.out.println("No existe el usuario");
+                }
+                break;
+//
+//            //botones panel empleado
+            case btnAddEmple:
+                if (consultas.existeEmpleado(vista.txtDniEmple.getText()) == false) {
+                    consultas.insertarEmpleado(vista.txtDniEmple.getText(), vista.txtNomEmple.getText(), vista.txtApeEmple.getText(), vista.txtPuestoEmple.getText(), vista.txtTlfnoEmple.getText(), usuario, vista.txtEmailEmple.getText());
+                    JOptionPane.showMessageDialog(vista, "El empleado se inserto correctamente");
+                    vista.tablaEmpleados.setModel(consultas.verEmpleados());
+                    vista.txtDniEmple.setText("");
+                    vista.txtNomEmple.setText("");
+                    vista.txtApeEmple.setText("");
+                    vista.txtPuestoEmple.setText("");
+                    vista.txtTlfnoEmple.setText("");
+                    vista.txtEmailEmple.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "El empleado ya existe");
+                }
+                break;
+
             case btnModEmple:
-                consultas.actualizarEmpleado();
+                int fila2 = vista.tablaEmpleados.getSelectedRow();
+                if (fila2 > -1) {
+                    consultas.actualizarEmpleado(vista.txtDniEmple.getText(), vista.txtNomEmple.getText(), vista.txtApeEmple.getText(), vista.txtPuestoEmple.getText(), vista.txtTlfnoEmple.getText(), usuario, vista.txtEmailEmple.getText());
+                    JOptionPane.showMessageDialog(vista, "El empleado se actualizo correctamente");
+                    vista.tablaEmpleados.setModel(consultas.verEmpleados());
+                    vista.txtDniEmple.setText("");
+                    vista.txtNomEmple.setText("");
+                    vista.txtApeEmple.setText("");
+                    vista.txtPuestoEmple.setText("");
+                    vista.txtTlfnoEmple.setText("");
+                    vista.txtEmailEmple.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
+                }
+
                 break;
+
             case btnDeletEmple:
-                consultas.eliminarUsuario();
-                break;
+                int fila3 = vista.tablaEmpleados.getSelectedRow();
+                if (fila3 > -1) {
+                    consultas.eliminarEmpleado(vista.txtDniEmple.getText());
+                    JOptionPane.showMessageDialog(vista, "El empleado se elimino correctamente");
+                    vista.tablaEmpleados.setModel(consultas.verEmpleados());
+                    vista.txtDniEmple.setText("");
+                    vista.txtNomEmple.setText("");
+                    vista.txtApeEmple.setText("");
+                    vista.txtPuestoEmple.setText("");
+                    vista.txtTlfnoEmple.setText("");
+                    vista.txtEmailEmple.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
+                }
 
-            //botones panel horario
+                break;
+//
+//            //botones panel horario
             case btnAddTarea:
-                consultas.insertarTarea();
+                String fecha = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.dcFechaHorarioAdmin.getDate());
+                if (consultas.insertarTarea(fecha, vista.cbDniTarea.getSelectedItem().toString().split("-")[0], vista.txtZonaTarea.getText(), vista.txtTramoHorario.getText(), vista.txtTarea.getText())) {
+                    JOptionPane.showMessageDialog(vista, "La tarea se inserto correctamente");
+                    vista.tablaHorarios.setModel(consultas.verTareas());
+                    vista.txtIdTarea.setText("");
+                    vista.dcFechaHorarioAdmin.setDate(null);
+                    vista.txtZonaTarea.setText("");
+                    vista.txtTramoHorario.setText("");
+                    vista.txtTarea.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "Ocurrio un error al insertar la tarea");
+                }
                 break;
+
             case btnModTarea:
-                consultas.actualizarTarea();
+                int fila = vista.tablaHorarios.getSelectedRow();
+                if (fila > -1) {
+                    String fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.dcFechaHorarioAdmin.getDate());
+                    consultas.ActualizarTarea(vista.txtIdTarea.getText(), fecha2, vista.cbDniTarea.getSelectedItem().toString().split("-")[0], vista.txtZonaTarea.getText(), vista.txtTramoHorario.getText(), vista.txtTarea.getText());
+                    JOptionPane.showMessageDialog(vista, "Se ha actualizado la tarea con exito");
+                    vista.tablaHorarios.setModel(consultas.verTareas());
+                    vista.txtIdTarea.setText("");
+                    vista.dcFechaHorarioAdmin.setDate(null);
+                    vista.txtZonaTarea.setText("");
+                    vista.txtTramoHorario.setText("");
+                    vista.txtTarea.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
+                }
                 break;
+
             case btnDeletTarea:
-                consultas.eliminarTarea();
-
-            //botones panel incidencia
+                int fila1 = vista.tablaHorarios.getSelectedRow();
+                if (fila1 > -1) {
+                    String fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.dcFechaHorarioAdmin.getDate());
+                    consultas.eliminarTarea(vista.txtIdTarea.getText());
+                    JOptionPane.showMessageDialog(vista, "Se ha eliminado la tarea correctamente");
+                    vista.tablaHorarios.setModel(consultas.verTareas());
+                    vista.txtIdTarea.setText("");
+                    vista.dcFechaHorarioAdmin.setDate(null);
+                    vista.txtZonaTarea.setText("");
+                    vista.txtTramoHorario.setText("");
+                    vista.txtTarea.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
+                }
+                break;
+//            //botones panel incidencia
             case btnAddInciden:
-                consultas.insertarIncidencia();
-                break;
-            case btnModInciden:
-                consultas.actualizarIncidencia();
-                break;
-            case btnDeletInciden:
-                consultas.eliminarIncidencia();
+                if (consultas.insertarIncidencia(vista.txtNomIncidencia.getText(), vista.txtTipoIncidencia.getText(), usuario, usuario, usuario, vista.txtDescripcionIncide.getText(), vista.txtLocalizacionInciden.getText(), vista.txtEstadoInciden.getText(), vista.txtPrioridadIncide.getText(), vista.cbEmpleIncidencias.getSelectedItem().toString().split("-")[2])) {
+                    JOptionPane.showMessageDialog(vista, "Se inserto la incidencia con exito");
+                    vista.tablaIncidencias.setModel(consultas.listarIncidencias());
+                    vista.txtCodIncidencia.setText("");
+                    vista.txtNomIncidencia.setText("");
+                    vista.txtTipoIncidencia.setText("");
+                    vista.txtDescripcionIncide.setText("");
+                    vista.txtLocalizacionInciden.setText("");
+                    vista.txtEstadoInciden.setText("");
+                    vista.txtPrioridadIncide.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "Ha ocurrido un error en la insercion");
+                }
                 break;
 
-        }*/
+            case btnModInciden:
+                int fila4 = vista.tablaIncidencias.getSelectedRow();
+                if (fila4 > -1) {
+                    consultas.actualizarIncidencia(vista.txtCodIncidencia.getText(), vista.txtNomIncidencia.getText(), vista.txtTipoIncidencia.getText(), usuario, usuario, usuario, vista.txtDescripcionIncide.getText(), vista.txtLocalizacionInciden.getText(), vista.txtEstadoInciden.getText(), vista.txtPrioridadIncide.getText(), vista.cbEmpleIncidencias.getSelectedItem().toString().split("-")[2]);
+                    JOptionPane.showMessageDialog(vista, "Se actualizo la incidencia con exito");
+                    vista.tablaIncidencias.setModel(consultas.listarIncidencias());
+                    vista.txtCodIncidencia.setText("");
+                    vista.txtNomIncidencia.setText("");
+                    vista.txtTipoIncidencia.setText("");
+                    vista.txtDescripcionIncide.setText("");
+                    vista.txtLocalizacionInciden.setText("");
+                    vista.txtEstadoInciden.setText("");
+                    vista.txtPrioridadIncide.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
+                }
+                break;
+
+            case btnDeletInciden:
+                int fila5 = vista.tablaIncidencias.getSelectedRow();
+                if (fila5 > -1) {
+                    consultas.eliminarIncidencia(vista.txtCodIncidencia.getText());
+                    JOptionPane.showMessageDialog(vista, "Se elimino la incidencia con exito");
+                    vista.tablaIncidencias.setModel(consultas.listarIncidencias());
+                    vista.txtCodIncidencia.setText("");
+                    vista.txtNomIncidencia.setText("");
+                    vista.txtTipoIncidencia.setText("");
+                    vista.txtDescripcionIncide.setText("");
+                    vista.txtLocalizacionInciden.setText("");
+                    vista.txtEstadoInciden.setText("");
+                    vista.txtPrioridadIncide.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
+                }
+                break;
+
+        }
     }
-/*
+
     //mouseClicked
-    @Override
     public void mouseClicked(MouseEvent e) {
 
         //tabla usuarios
-        if (vista.tablaUsuarios.getSelectedRow() > -1) {
-            int usuario = vista.tablaUsuarios.rowAtPoint(e.getPoint());
-            if (usuario > -1) {
-                try {
-                    String userTabla = String.valueOf(vista.tablaUsuarios.getValueAt(usuario, 0));
+        int fila;
+        switch (controlador.AccionMVC.valueOf(e.getComponent().getName())) {
 
-                    Object[] datosUsuario = modelo.getDatosUsuario(userTabla);
-
-                    vista.txtEmailUser.setText(datosUsuario[1].toString());
-                    vista.txtPassUser.setText(datosUsuario[2].toString());
-                    vista.txtTipoUser.setText(datosUsuario[3].toString());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error al obtener los datos de la tupla de la tabla.\n\n" + ex.getMessage());
-                    ex.printStackTrace();
+            case tablaUsuario:
+                fila = this.vista.tablaUsuarios.rowAtPoint(e.getPoint());
+                if (fila > -1) {
+                    this.vista.txtEmailUser.setText(String.valueOf(this.vista.tablaUsuarios.getValueAt(fila, 2)));
+                    this.vista.txtPassUser.setText(String.valueOf(this.vista.tablaUsuarios.getValueAt(fila, 1)));
+                    if (vista.tablaUsuarios.getValueAt(fila, 0).equals("0")) {
+                        this.vista.cbTipoUsuario.setSelectedIndex(0);
+                    } else {
+                        this.vista.cbTipoUsuario.setSelectedIndex(1);
+                    }
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecciona un elemento de la tabla.\n\n");
-            }
-        }
+                vista.txtEmailUser.setEditable(false);
+                break;
 
+            case tablaPlanning:
+                //String fecha = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.dcFechaHorarioAdmin.getDate());
+                fila = this.vista.tablaHorarios.rowAtPoint(e.getPoint());
+                String entrada = String.valueOf(vista.tablaHorarios.getValueAt(fila, 1));
+                SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
+                Date fecha = null;
+                try {
+                    fecha = parseador.parse(entrada);
+                } catch (ParseException ex) {
+                    Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaFormateada = formateador.format(fecha);
+
+                if (fila > -1) {
+                    this.vista.txtIdTarea.setText(String.valueOf(this.vista.tablaHorarios.getValueAt(fila, 0)));
+                    this.vista.dcFechaHorarioAdmin.setDate(fecha);
+                    this.vista.cbDniTarea.setSelectedItem(vista.tablaHorarios.getValueAt(fila, 2));
+                    this.vista.txtZonaTarea.setText(String.valueOf(vista.tablaHorarios.getValueAt(fila, 3)));
+                    this.vista.txtTramoHorario.setText(String.valueOf(vista.tablaHorarios.getValueAt(fila, 4)));
+                    this.vista.txtTarea.setText(String.valueOf(vista.tablaHorarios.getValueAt(fila, 5)));
+                }
+                break;
+        }
+    }
+    /*
         //tabla empleados
         if (vista.tablaEmpleados.getSelectedRow() > -1) {
             int empleado = vista.tablaUsuarios.rowAtPoint(e.getPoint());
@@ -487,9 +736,8 @@ public class controlador implements ActionListener {
                 }
             }
         }
-*/
-          
-/*
+     */
+ /*
     public void iniciarModelo() {
 
         vista.tablaUsuario.setModel(consultas.tablaUsuarios());
@@ -577,6 +825,30 @@ public class controlador implements ActionListener {
         vista.tablaTrabajadores.getTableHeader()
                 .setResizingAllowed(false);
     }
-*/
+
+
+     */
+    /**
+     * comprueba que no haya Strings vacios
+     *
+     * @param parametros strings
+     * @return false si es ta vacio
+     */
+
 }
-}
+
+//    /**
+//     * comprueba que no haya Strings vacios
+//     *
+//     * @param a
+//     * @param parametros strings
+//     * @return false si es ta vacio
+//     */
+//    public static boolean vacioString(String... a) {
+//        for (String a1 : a) {
+//            if (a1.isEmpty()) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }

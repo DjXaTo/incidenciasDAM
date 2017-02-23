@@ -6,6 +6,9 @@
 package modelo;
 
 import database.conexion;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,16 +35,21 @@ public class modelo extends conexion {
      * @param l logo de la empresa
      * @return true o false
      */
-    public boolean insertarEmpresa(String c, String nom, String dir, String tel, String l) {
+    public boolean insertarEmpresa(String c, String nom, String dir, String tel, File l) {
         try {
             String q = "INSERT INTO empresa set CIF='" + c + "', nombre='" + nom + "', direccion='" + dir + "', telefono='" + tel + "', logo='" + l + "'";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
+            FileInputStream fis = new FileInputStream(l);
+            ps.setBinaryStream(3, fis, l.length());
             ps.execute(); // Ejecuto la consulta
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
+        } catch (FileNotFoundException f) {
+            //System.err.print(f.getMessage());
         }
+        
         return false;
     }
 
@@ -63,7 +71,7 @@ public class modelo extends conexion {
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
@@ -86,7 +94,7 @@ public class modelo extends conexion {
             res.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
             return false;
         }
     }
@@ -102,7 +110,7 @@ public class modelo extends conexion {
             res.close();
 
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return s;
     }
@@ -127,7 +135,7 @@ public class modelo extends conexion {
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
@@ -152,7 +160,7 @@ public class modelo extends conexion {
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
@@ -171,7 +179,7 @@ public class modelo extends conexion {
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
@@ -198,7 +206,7 @@ public class modelo extends conexion {
             total = res.getInt("total");
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         Object data[][] = new String[total][columnas.length]; //Sacamos un array para el nombre de las columnas y otro para los datos de las filas
@@ -220,7 +228,7 @@ public class modelo extends conexion {
             dtm.setDataVector(data, columnas); // Le decimos a la tabla que use el modelo de datos que hemos creado
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         return dtm;
@@ -242,7 +250,7 @@ public class modelo extends conexion {
             }
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         return com;
@@ -265,7 +273,23 @@ public class modelo extends conexion {
             res.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean existeUsuarioSinPass(String mail) {
+        String s = "";
+        try {
+            String q = "select email from usuario where email='" + mail + "'";
+            PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
+            ResultSet res = ps.executeQuery(); //Ejecuto la query
+            res.next();
+            s = res.getString("email"); //Con el result set recojo el resultado de la query
+            res.close();
+            return true;
+        } catch (SQLException e) {
+            //System.err.print(e.getMessage());
             return false;
         }
     }
@@ -293,7 +317,8 @@ public class modelo extends conexion {
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
+            //e.printStackTrace();
         }
         return false;
     }
@@ -308,13 +333,13 @@ public class modelo extends conexion {
      */
     public boolean actualizarUsuario(String tipo, String p, String mail) {
         try {
-            String q = "update usuario set tipo_usuario=" + tipo + ", pass='" + p + "', email='" + mail + "' where email='" + mail + "'";
+            String q = "update usuario set tipo_usuario=" + tipo + ", pass='" + p + "' where email='" + mail + "'";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             ps.execute(); // Ejecuto la consulta
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
@@ -333,7 +358,7 @@ public class modelo extends conexion {
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
@@ -360,7 +385,7 @@ public class modelo extends conexion {
             total = res.getInt("total");
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         Object data[][] = new String[total][columnas.length]; //Sacamos un array para el nombre de las columnas y otro para los datos de las filas
@@ -378,7 +403,7 @@ public class modelo extends conexion {
             dtm.setDataVector(data, columnas); // Le decimos a la tabla que use el modelo de datos que hemos creado
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         return dtm;
@@ -395,15 +420,15 @@ public class modelo extends conexion {
      * @param tar Tarea a realizar
      * @return true o false
      */
-    public boolean insertarTarea(String id, String fec, String d, String z, String tramo, String tar) {
+    public boolean insertarTarea(String fec, String d, String z, String tramo, String tar) {
         try {
-            String q = "insert into planning set id_tarea=" + id + ", fecha='" + fec + "', dni='" + d + "', zona='" + z + "', tramo_horario='" + tramo + "', tarea='" + tar + "'";
+            String q = "insert into planning set fecha='" + fec + "', dni='" + d + "', zona='" + z + "', tramo_horario='" + tramo + "', tarea='" + tar + "'";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             ps.execute(); // Ejecuto la consulta
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
         return false;
     }
@@ -421,13 +446,13 @@ public class modelo extends conexion {
      */
     public boolean ActualizarTarea(String id, String fec, String d, String z, String tramo, String tar) {
         try {
-            String q = "update planning set id_tarea=" + id + ", fecha='" + fec + "', dni='" + d + "', zona='" + z + "', tramo_horario='" + tramo + "', tarea='" + tar + "' where id_tarea=" + id + "";
+            String q = "update planning set fecha='" + fec + "', dni='" + d + "', zona='" + z + "', tramo_horario='" + tramo + "', tarea='" + tar + "' where id_tarea=" + id + "";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             ps.execute(); // Ejecuto la consulta
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
         return false;
     }
@@ -446,7 +471,7 @@ public class modelo extends conexion {
             ps.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
@@ -473,7 +498,7 @@ public class modelo extends conexion {
             total = res.getInt("total");
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         Object data[][] = new String[total][columnas.length]; //Sacamos un array para el nombre de las columnas y otro para los datos de las filas
@@ -494,7 +519,7 @@ public class modelo extends conexion {
             dtm.setDataVector(data, columnas); // Le decimos a la tabla que use el modelo de datos que hemos creado
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         return dtm;
@@ -516,7 +541,7 @@ public class modelo extends conexion {
             }
             res.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
 
         }
         return com;
@@ -538,31 +563,16 @@ public class modelo extends conexion {
      * @return true o false
      */
     public boolean insertarIncidencia(String nom, String tip, String img, String fec_suc, String fec_res, String desc, String loc, String est, String prior, String mail) {
-        boolean res = false;
-
         try {
-            CallableStatement cstm = this.getConexion().prepareCall("{call insertarIncidencia(?,?,?,?,?,?,?,?,?,?)}");
-
-            cstm.setString(1, nom);
-            cstm.setString(2, tip);
-            cstm.setString(3, img);
-            cstm.setString(4, fec_suc);
-            cstm.setString(5, fec_res);
-            cstm.setString(6, desc);
-            cstm.setString(7, loc);
-            cstm.setString(8, est);
-            cstm.setString(9, prior);
-            cstm.setString(10, mail);
-            cstm.executeUpdate();
-
-            cstm.close();
-            res = true;
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getCause());
-            System.out.println(ex.getMessage() + "     \n  " + ex.getSQLState());
+            String q = "insert into incidencia set nombre='" + nom + "', tipo='" + tip + "', foto='" + img + "', fecha_suceso='" + fec_suc + "', fecha_resolucion='" + fec_res + "', descripcion='"+desc+"', localizacion='"+loc+"', estado="+est+", prioridad="+prior+", email='"+mail+"'";
+            PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
+            ps.execute(); // Ejecuto la consulta
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            //System.err.println(e.getMessage());
         }
-        return res;
+        return false;
     }
 
     /**
@@ -581,31 +591,16 @@ public class modelo extends conexion {
      * @return true o false
      */
     public boolean actualizarIncidencia(String cod, String nom, String tip, String img, String fec_suc, String fec_res, String desc, String loc, String est, String prior, String mail) {
-        boolean res = false;
-
-        try {
-            CallableStatement cstm = this.getConexion().prepareCall("{call actualizarIncidencia(?,?,?,?,?,?,?,?,?,?)}");
-
-            cstm.setString(1, nom);
-            cstm.setString(2, tip);
-            cstm.setString(3, img);
-            cstm.setString(4, fec_suc);
-            cstm.setString(5, fec_res);
-            cstm.setString(6, desc);
-            cstm.setString(7, loc);
-            cstm.setString(8, est);
-            cstm.setString(9, prior);
-            cstm.setString(10, mail);
-            cstm.executeUpdate();
-
-            cstm.close();
-            res = true;
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getCause());
-            System.out.println(ex.getMessage() + "     \n  " + ex.getSQLState());
+         try {
+            String q = "update incidencia set nombre='" + nom + "', tipo='" + tip + "', foto='" + img + "', fecha_suceso='" + fec_suc + "', fecha_resolucion='" + fec_res + "', descripcion='"+desc+"', localizacion='"+loc+"', estado="+est+", prioridad="+prior+", email='"+mail+"' where codigo="+cod+"";
+            PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
+            ps.execute(); // Ejecuto la consulta
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            //System.err.println(e.getMessage());
         }
-        return res;
+        return false;
     }
 
     /**
@@ -615,22 +610,16 @@ public class modelo extends conexion {
      * @return true o false
      */
     public boolean eliminarIncidencia(String cod) {
-        boolean res = false;
         try {
-            //Preparamos la funcion que va a ejecutar la eliminacion
-            CallableStatement cstm = this.getConexion().prepareCall("{call eliminarIncidencia(?)}");
-            //Indicas el tipo de dato que devuelve
-            //Indicas el parametro que le pasas, en este caso el codigo del bar y el dni
-            cstm.setString(1, cod);
-            //Ejecutas la funcion
-            cstm.executeUpdate();
-            //Recoges el resultado
-            cstm.close();
-            res = true;
-
-        } catch (Exception e) {
+            String q = "delete from incidencia where codigo=" + cod + "";
+            PreparedStatement ps = this.getConexion().prepareStatement(q);
+            ps.execute();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            //System.err.print(e.getMessage());
         }
-        return res;
+        return false;
 
     }
 
@@ -640,34 +629,32 @@ public class modelo extends conexion {
      * @return true o false
      */
     public DefaultTableModel listarIncidencias() {
-        DefaultTableModel tablemodel = new DefaultTableModel() {
+         DefaultTableModel dtm = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        int registros = 0;
-        String[] columNames = {"Codigo", "Nombre", "Tipo", "Foto", "Fecha suceso", "Fecha resolucion", "Descripcion", "Localizacion", "Estado", "Prioridad", "Email"};
-        //obtenemos la cantidad de registros existentes en la tabla y se almacena en la variable "registros"
-        //para formar la matriz de datos
+        int total = 0;
+        String[] columnas = {"codigo", "nombre", "tipo", "foto", "fecha_suceso", "fecha_resolucion", "descripcion", "localizacion", "estado", "prioridad", "email"};
         try {
-            CallableStatement cstmt = this.getConexion().prepareCall("{call consultarIncidencias}");
-            ResultSet res = cstmt.executeQuery();
+            String q = "SELECT count(*) as total FROM incidencia";
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            ResultSet res = pstm.executeQuery();
             res.next();
-            registros = res.getInt("todo");
+            total = res.getInt("total");
             res.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+
         }
-        //se crea una matriz con tantas filas y columnas que necesite
-        Object[][] data = new String[registros][6];
+        Object data[][] = new String[total][columnas.length]; //Sacamos un array para el nombre de las columnas y otro para los datos de las filas
         try {
-            //realizamos la consulta sql y llenamos los datos en la matriz "Object[][] data"
-            CallableStatement cstmt = this.getConexion().prepareCall("{call verIncidencias}");
-            ResultSet res = cstmt.executeQuery();
+            String q = "SELECT codigo, nombre, tipo, foto, fecha_suceso, fecha_resolucion, descripcion, localizacion, estado, prioridad, email FROM incidencia";
+            PreparedStatement ps = this.getConexion().prepareStatement(q);
+            ResultSet res = ps.executeQuery();
             int i = 0;
             while (res.next()) {
-
                 data[i][0] = res.getString("codigo");
                 data[i][1] = res.getString("nombre");
                 data[i][2] = res.getString("tipo");
@@ -677,18 +664,17 @@ public class modelo extends conexion {
                 data[i][6] = res.getString("descripcion");
                 data[i][7] = res.getString("localizacion");
                 data[i][8] = res.getString("estado");
-                data[i][9] = res.getString("prioridad");
+                data[i][9] = res.getString("prioridad");  
                 data[i][10] = res.getString("email");
-
                 i++;
             }
+            dtm.setDataVector(data, columnas); // Le decimos a la tabla que use el modelo de datos que hemos creado
             res.close();
-            //se añade la matriz de datos en el DefaultTableModel
-            tablemodel.setDataVector(data, columNames);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+
         }
-        return tablemodel;
+        return dtm;
 
     }
 
@@ -708,7 +694,7 @@ public class modelo extends conexion {
             res.close();
             return true;
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            //System.err.print(e.getMessage());
         }
         return false;
     }
