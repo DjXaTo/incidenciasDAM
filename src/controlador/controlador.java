@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import modelo.modelo;
 import vista.vista;
@@ -9,19 +10,28 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import static java.lang.Character.isLetter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import sun.net.www.content.image.png;
 
 public class controlador implements ActionListener, MouseListener {
 
+    File f = null;
     private final vista vista;
     private final modelo consultas;
+    private JFileChooser fcLogo = new JFileChooser();
 
-    String usuario = "";
+    FileNameExtensionFilter imagen = new FileNameExtensionFilter("Imagen(*.jpg),(*.png)", "jpg", "png");
 
     public controlador(vista v) {
         vista = v;
@@ -75,11 +85,14 @@ public class controlador implements ActionListener, MouseListener {
         btnAddEmple,
         btnModEmple,
         btnDeletEmple,
+        btnSeleFotoEmpleAdmin,
+        btnBuscarEmpleAdmin,
         //panel incidencias
 
         btnAddInciden,
         btnModInciden,
         btnDeletInciden,
+        btnSeleFotoIncidencia,
         //panel horarios
 
         btnAddTarea,
@@ -87,7 +100,9 @@ public class controlador implements ActionListener, MouseListener {
         btnDeletTarea,
         //tablas
         tablaUsuario,
-        tablaPlanning
+        tablaPlanning,
+        tablaIncidencia,
+        tablaEmpleado
 
     }
 
@@ -95,9 +110,9 @@ public class controlador implements ActionListener, MouseListener {
 
         //propiedades de los paneles principales
         //logo de las ventanas
-        Toolkit t = Toolkit.getDefaultToolkit();
-        //vista.setIconImage(t.getImage(getClass().getResourcer("/imagenes/logo.png")));
-
+        Object[] s = consultas.getEmpresa();
+        vista.setIconImage((Image) s[4]);
+        fcLogo.setFileFilter(imagen);
         if (consultas.existeEmpresa() == false) {
             vista.panelEmpresa.setVisible(true);
             vista.panelAdmin.setVisible(false);
@@ -124,6 +139,7 @@ public class controlador implements ActionListener, MouseListener {
         vista.cbDniTarea.setModel(consultas.cbDniEmpleados());
         vista.cbEmpleIncidencias.setModel(consultas.cbEmpleados());
         vista.cbIncidenEmple.setModel(consultas.cbEmpleados());
+        vista.cbEmailEmpleAdmin.setModel(consultas.cbEmailEmpleado());
 
         //ajusgamos el tamaño de las imagenes a sus contenedores (labels)
         /* ejemplo
@@ -366,6 +382,9 @@ public class controlador implements ActionListener, MouseListener {
         vista.btnDeletEmple.setActionCommand("btnDeletEmple");
         vista.btnDeletEmple.addActionListener(this);
 
+        vista.btnBuscarEmpleAdmin.setActionCommand("btnBuscarEmpleAdmin");
+        vista.btnBuscarEmpleAdmin.addActionListener(this);
+
         //panel incidencias
         vista.btnAddInciden.setActionCommand("btnAddInciden");
         vista.btnAddInciden.addActionListener(this);
@@ -391,6 +410,13 @@ public class controlador implements ActionListener, MouseListener {
 
         vista.tablaHorarios.addMouseListener(this);
         vista.tablaHorarios.setName("tablaPlanning");
+
+        vista.tablaIncidencias.addMouseListener(this);
+        vista.tablaIncidencias.setName("tablaIncidencia");
+
+        vista.tablaEmpleados.addMouseListener(this);
+        vista.tablaEmpleados.setName("tablaEmpleado");
+
     }
 
     //acciones de los botones
@@ -402,16 +428,22 @@ public class controlador implements ActionListener, MouseListener {
             case btnSelecLogo:
                 vista.frameFC.setVisible(true);
                 vista.frameFC.setSize(804, 502);
+                if (vista.fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
+                    f = vista.fcLogo.getSelectedFile();
+
+                }
                 break;
 
             case btnAceptarEmpresa:
                 consultas.insertarEmpresa(vista.txtCifEmpresa.getText(), vista.txtNombreEmpresa.getText(), vista.txtDirEmpresa.getText(),
-                        vista.txtTelEmpresa.getText(), vista.fcLogo.getSelectedFile());
+                        vista.txtTelEmpresa.getText(), f);
                 JOptionPane.showMessageDialog(vista, "Se ha insertado la empresa correctamente.");
                 vista.panelLogin.setVisible(true);
                 vista.panelAdmin.setVisible(false);
                 vista.panelEmple.setVisible(false);
                 vista.panelEmpresa.setVisible(false);
+                Object[] s = consultas.getEmpresa();
+                vista.setIconImage((Image) s[4]);
                 break;
 
             case btnCancelarEmpresa:
@@ -485,7 +517,9 @@ public class controlador implements ActionListener, MouseListener {
 //            //botones panel empleado
             case btnAddEmple:
                 if (consultas.existeEmpleado(vista.txtDniEmple.getText()) == false) {
-                    consultas.insertarEmpleado(vista.txtDniEmple.getText(), vista.txtNomEmple.getText(), vista.txtApeEmple.getText(), vista.txtPuestoEmple.getText(), vista.txtTlfnoEmple.getText(), usuario, vista.txtEmailEmple.getText());
+                    consultas.insertarEmpleado(vista.txtDniEmple.getText(), vista.txtNomEmple.getText(),
+                            vista.txtApeEmple.getText(), vista.txtPuestoEmple.getText(), vista.txtTlfnoEmple.getText(),
+                            vista.cbEmailEmpleAdmin.getSelectedItem().toString());
                     JOptionPane.showMessageDialog(vista, "El empleado se inserto correctamente");
                     vista.tablaEmpleados.setModel(consultas.verEmpleados());
                     vista.txtDniEmple.setText("");
@@ -493,7 +527,6 @@ public class controlador implements ActionListener, MouseListener {
                     vista.txtApeEmple.setText("");
                     vista.txtPuestoEmple.setText("");
                     vista.txtTlfnoEmple.setText("");
-                    vista.txtEmailEmple.setText("");
                 } else {
                     JOptionPane.showMessageDialog(vista, "El empleado ya existe");
                 }
@@ -502,7 +535,9 @@ public class controlador implements ActionListener, MouseListener {
             case btnModEmple:
                 int fila2 = vista.tablaEmpleados.getSelectedRow();
                 if (fila2 > -1) {
-                    consultas.actualizarEmpleado(vista.txtDniEmple.getText(), vista.txtNomEmple.getText(), vista.txtApeEmple.getText(), vista.txtPuestoEmple.getText(), vista.txtTlfnoEmple.getText(), usuario, vista.txtEmailEmple.getText());
+                    consultas.actualizarEmpleado(vista.txtDniEmple.getText(), vista.txtNomEmple.getText(),
+                            vista.txtApeEmple.getText(), vista.txtPuestoEmple.getText(), vista.txtTlfnoEmple.getText(),
+                            vista.cbEmailEmpleAdmin.getSelectedItem().toString());
                     JOptionPane.showMessageDialog(vista, "El empleado se actualizo correctamente");
                     vista.tablaEmpleados.setModel(consultas.verEmpleados());
                     vista.txtDniEmple.setText("");
@@ -510,7 +545,6 @@ public class controlador implements ActionListener, MouseListener {
                     vista.txtApeEmple.setText("");
                     vista.txtPuestoEmple.setText("");
                     vista.txtTlfnoEmple.setText("");
-                    vista.txtEmailEmple.setText("");
                 } else {
                     JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
                 }
@@ -528,13 +562,26 @@ public class controlador implements ActionListener, MouseListener {
                     vista.txtApeEmple.setText("");
                     vista.txtPuestoEmple.setText("");
                     vista.txtTlfnoEmple.setText("");
-                    vista.txtEmailEmple.setText("");
                 } else {
                     JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
                 }
 
                 break;
-//
+
+            case btnSeleFotoEmpleAdmin:
+                vista.frameFC.setVisible(true);
+                vista.frameFC.setSize(804, 502);
+                if (vista.fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
+                    f = vista.fcLogo.getSelectedFile();
+
+                }
+                break;
+
+            case btnBuscarEmpleAdmin:
+                consultas.tablaBusqueda(vista.txtBusqEmpleado.getText());
+
+                break;
+
 //            //botones panel horario
             case btnAddTarea:
                 String fecha = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.dcFechaHorarioAdmin.getDate());
@@ -586,7 +633,12 @@ public class controlador implements ActionListener, MouseListener {
                 break;
 //            //botones panel incidencia
             case btnAddInciden:
-                if (consultas.insertarIncidencia(vista.txtNomIncidencia.getText(), vista.txtTipoIncidencia.getText(), usuario, usuario, usuario, vista.txtDescripcionIncide.getText(), vista.txtLocalizacionInciden.getText(), vista.txtEstadoInciden.getText(), vista.txtPrioridadIncide.getText(), vista.cbEmpleIncidencias.getSelectedItem().toString().split("-")[2])) {
+                String fechaSuc = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.fechaSucesoAdmin.getDate());
+                String fechaRes = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.fechaSucesoAdmin.getDate());
+                if (consultas.insertarIncidencia(vista.txtNomIncidencia.getText(), vista.txtTipoIncidencia.getText(), fechaSuc,
+                        fechaRes, vista.txtDescripcionIncide.getText(), vista.txtLocalizacionInciden.getText(),
+                        vista.txtEstadoInciden.getText(), vista.txtPrioridadIncide.getText(),
+                        vista.cbEmpleIncidencias.getSelectedItem().toString().split("-")[2])) {
                     JOptionPane.showMessageDialog(vista, "Se inserto la incidencia con exito");
                     vista.tablaIncidencias.setModel(consultas.listarIncidencias());
                     vista.txtCodIncidencia.setText("");
@@ -603,8 +655,13 @@ public class controlador implements ActionListener, MouseListener {
 
             case btnModInciden:
                 int fila4 = vista.tablaIncidencias.getSelectedRow();
+                String fechaSuc1 = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.fechaSucesoAdmin.getDate());
+                String fechaRes1 = new SimpleDateFormat("yyyy-MM-dd").format(this.vista.fechaResolucionAdmin.getDate());
                 if (fila4 > -1) {
-                    consultas.actualizarIncidencia(vista.txtCodIncidencia.getText(), vista.txtNomIncidencia.getText(), vista.txtTipoIncidencia.getText(), usuario, usuario, usuario, vista.txtDescripcionIncide.getText(), vista.txtLocalizacionInciden.getText(), vista.txtEstadoInciden.getText(), vista.txtPrioridadIncide.getText(), vista.cbEmpleIncidencias.getSelectedItem().toString().split("-")[2]);
+                    consultas.actualizarIncidencia(vista.txtCodIncidencia.getText(), vista.txtNomIncidencia.getText(),
+                            vista.txtTipoIncidencia.getText(), fechaSuc1, fechaRes1, vista.txtDescripcionIncide.getText(),
+                            vista.txtLocalizacionInciden.getText(), vista.txtEstadoInciden.getText(), vista.txtPrioridadIncide.getText(),
+                            vista.cbEmpleIncidencias.getSelectedItem().toString().split("-")[2]);
                     JOptionPane.showMessageDialog(vista, "Se actualizo la incidencia con exito");
                     vista.tablaIncidencias.setModel(consultas.listarIncidencias());
                     vista.txtCodIncidencia.setText("");
@@ -634,6 +691,15 @@ public class controlador implements ActionListener, MouseListener {
                     vista.txtPrioridadIncide.setText("");
                 } else {
                     JOptionPane.showMessageDialog(vista, "No se ha seleccionado ninguna fila");
+                }
+                break;
+
+            case btnSeleFotoIncidencia:
+                vista.frameFC.setVisible(true);
+                vista.frameFC.setSize(804, 502);
+                if (vista.fcLogo.showOpenDialog(vista) == JFileChooser.APPROVE_OPTION) {
+                    f = vista.fcLogo.getSelectedFile();
+
                 }
                 break;
 
@@ -684,171 +750,114 @@ public class controlador implements ActionListener, MouseListener {
                     this.vista.txtTarea.setText(String.valueOf(vista.tablaHorarios.getValueAt(fila, 5)));
                 }
                 break;
-        }
-    }
-    /*
-        //tabla empleados
-        if (vista.tablaEmpleados.getSelectedRow() > -1) {
-            int empleado = vista.tablaUsuarios.rowAtPoint(e.getPoint());
-            if (empleado > -1) {
+
+            //tabla empleados
+            case tablaIncidencia:
+                fila = this.vista.tablaIncidencias.rowAtPoint(e.getPoint());
+                String entrada1 = String.valueOf(vista.tablaIncidencias.getValueAt(fila, 3));
+                String entrada2 = String.valueOf(vista.tablaIncidencias.getValueAt(fila, 4));
+                SimpleDateFormat parseador1 = new SimpleDateFormat("yyyy-MM-dd");
+                Date fecha1 = null;
+                Date fecha2 = null;
                 try {
-                    String empleTabla = String.valueOf(vista.tablaEmpleados.getValueAt(empleado, 0));
-
-                    Object[] datosEmple = modelo.getDatosEmpleado(empleTabla);
-
-                    vista.txtDniEmple.setText(datosEmple[1].toString());
-                    vista.txtNomEmple.setText(datosEmple[2].toString());
-                    vista.txtApeEmple.setText(datosEmple[3].toString());
-                    vista.txtPuestoEmple.setText(datosEmple[4].toString());
-                    vista.txtTlfnoEmple.setText(datosEmple[5].toString());
-                    vista.txtEmailEmple.setText(datosEmple[6].toString());
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error al obtener los datos de la tupla de la tabla.\n\n" + ex.getMessage());
-                    ex.printStackTrace();
+                    fecha1 = parseador1.parse(entrada1);
+                    fecha2 = parseador1.parse(entrada2);
+                } catch (ParseException ex) {
+                    Logger.getLogger(controlador.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecciona un elemento de la tabla.\n\n");
+                SimpleDateFormat formateador1 = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaFormateada1 = formateador1.format(fecha1);
+                String fechaFormateada2 = formateador1.format(fecha2);
+                if (fila > -1) {
+                    this.vista.txtCodIncidencia.setText(String.valueOf(this.vista.tablaIncidencias.getValueAt(fila, 0)));
+                    this.vista.txtNomIncidencia.setText(String.valueOf(this.vista.tablaIncidencias.getValueAt(fila, 1)));
+                    this.vista.txtTipoIncidencia.setText(String.valueOf(this.vista.tablaIncidencias.getValueAt(fila, 2)));
+                    this.vista.fechaSucesoAdmin.setDate(fecha1);
+                    this.vista.fechaResolucionAdmin.setDate(fecha2);
+                    this.vista.txtDescripcionIncide.setText(String.valueOf(this.vista.tablaIncidencias.getValueAt(fila, 5)));
+                    this.vista.txtLocalizacionInciden.setText(String.valueOf(this.vista.tablaIncidencias.getValueAt(fila, 6)));
+                    this.vista.txtEstadoInciden.setText(String.valueOf(this.vista.tablaIncidencias.getValueAt(fila, 7)));
+                    this.vista.txtPrioridadIncide.setText(String.valueOf(this.vista.tablaIncidencias.getValueAt(fila, 8)));
+                    this.vista.cbEmpleIncidencias.setSelectedItem(vista.tablaIncidencias.getValueAt(fila, 9));
+                }
+                break;
+
+            case tablaEmpleado:
+                fila = this.vista.tablaEmpleados.rowAtPoint(e.getPoint());
+                if (fila > -1) {
+                    this.vista.txtDniEmple.setText(String.valueOf(this.vista.tablaEmpleados.getValueAt(fila, 0)));
+                    this.vista.txtNomEmple.setText(String.valueOf(this.vista.tablaEmpleados.getValueAt(fila, 1)));
+                    this.vista.txtApeEmple.setText(String.valueOf(this.vista.tablaEmpleados.getValueAt(fila, 2)));
+                    this.vista.txtPuestoEmple.setText(String.valueOf(this.vista.tablaEmpleados.getValueAt(fila, 3)));
+                    this.vista.txtTlfnoEmple.setText(String.valueOf(this.vista.tablaEmpleados.getValueAt(fila, 4)));
+                    this.vista.cbEmailEmpleAdmin.setSelectedItem(vista.tablaEmpleados.getValueAt(fila, 5));
+                    break;
+                }
+
+        }
+
+    }
+
+    /**
+     * Metodo para que solo acepte numeros enteros
+     *
+     * @param a: palabra que escribes
+     * @return false si hay alguna letra
+     */
+    public static boolean soloNumeros(String a) {
+        for (int i = 0; i < a.length(); i++) {
+            if (a.charAt(i) > '9') {
+                return false;
             }
         }
+        return true;
+    }
 
-        //tabla incidencias
-        if (vista.tablaIncidencias.getSelectedRow() > -1) {
-            int incidencia = vista.tablaIncidencias.rowAtPoint(e.getPoint());
-            if (incidencia > -1) {
-                try {
-                    String inciTabla = String.valueOf(vista.tablaIncidencias.getValueAt(incidencia, 0));
-
-                    Object[] datosInci = modelo.listarIncidencias(inciTabla);
-
-                    vista.txtCodIncidencia.setText(datosInci[1].toString());
-                    vista.txtNomIncidencia.setText(datosInci[2].toString());
-                    vista.txtTipoIncidencia.setText(datosInci[3].toString());
-                    vista.txtDescripcionIncidencia.setText(datosInci[4].toString());
-                    vista.txtLocalizacionIncidencia.setText(datosInci[5].toString());
-                    vista.txtEstadoIncidencia.setText(datosInci[6].toString());
-                    vista.txtPrioridadIncidencia.setText(datosInci[7].toString());
-                    vista.txtEmailIncidencia.setText(datosInci[8].toString());
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error al obtener los datos de la tupla de la tabla.\n\n" + ex.getMessage());
-                    ex.printStackTrace();
-                }
+    /**
+     * Metodo para que solo acepte letras
+     *
+     * @param a: palabra que escribes
+     * @return false si hay algun numero
+     */
+    public static boolean soloLetras(String a) {
+        for (int i = 0; i < a.replace(" ", "").length(); i++) {
+            if (!isLetter(a.replace(" ", "").charAt(i))) {
+                return false;
             }
         }
+        return true;
+    }
+
+    /**
+     * Metodo para introducir un dni
+     *
+     * @param dn dni
+     * @return true si es correcto false si no
      */
- /*
-    public void iniciarModelo() {
-
-        vista.tablaUsuario.setModel(consultas.tablaUsuarios());
-        vista.tablaUsuario.getTableHeader().setReorderingAllowed(false);
-        vista.tablaUsuario.getTableHeader().setResizingAllowed(false);
-
-        vista.tablaEmpleado.setModel(consultas.tablaEmpleados());
-        vista.tablaEmpleado.getTableHeader().setReorderingAllowed(false);
-        vista.tablaHorario.getTableHeader().setResizingAllowed(false);
-
-        vista.tablaHorario.setModel(consiltas.tablaHorario();
-        vista.tablaHorario.getTableHeader().setReorderingAllowed(false);
-        vista.tablaHorario.getTableHeader().setResizingAllowed(false);
-
-        vista.tablaIncidencia.setModel(consultas.tablaIncidencia();
-        vista.tablaIncidencia.getTableHeader().setReorderingAllowed(false);
-        vista.tablaIncidencia.getTableHeader().setResizingAllowed(false);
-
+    public static boolean dni(String dn) {
+        return dn.length() == 9 && isLetter(dn.charAt(8)) && soloNumeros(dn.substring(1, 8));
     }
 
-    //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INICIAR SESIÓN COMO TRABAJADOR
-    public void inicioDeSesionDeTrabajador() {
-        vista.tablaCesta.setModel(modelo.tablaCestaClienteVacia());
-        vista.principal.pack();
-        vista.principal.setLocationRelativeTo(null);
-        vista.principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        vista.principal.setVisible(true);
-        cargarImagenesPrincipal();
-        int tiempo = modelo.getTiempo(usuario);
-        //RESUMIMOS EL HILO EN CASO DE HABER DESLOGEADO PARA QUE SIGA CONTANDO EL TIEMPO DE TRABAJO
-        a.resumir();
-        //EJECUTAMOS EL HILO PARA ACUMULAR EL TIEMPO DE TRABAJO DEL TRABAJADOR
-        a.run(tiempo);
-    }
-
-    //DEFINIMOS LA CONFIGURACIÓN DEL PROGRAMA AL INCIAR SESIÓN COMO ADMINISTRADOR
-    public void inicioDeSesionDeAdministrador() {
-        vista.principalAdmin.pack();
-        vista.principalAdmin.setLocationRelativeTo(null);
-        vista.principalAdmin.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        vista.principalAdmin.setVisible(true);
-        cargarImagenesPrincipalAdmin();
-        //SOLO EN CASO DE QUE EL USUARIO SEA UN ADMINISTRADOR, EJECUTAMOS EL HILO QUE COMPRUEBE LOS AVISOS
-        c.resumir();
-        c.run();
-    }
-
-    public void abrirPrograma() {
-        String bd = vista.txtNombreBD.getText();
-        String usu = vista.txtUsuBD.getText();
-        String pass = vista.txtPassBD.getText();
-        String ip = vista.txtIPBD.getText();
-        String port = vista.txtPortBD.getText();
-
-        vista.configuracionDB.setVisible(false);
-        vista.cargando.pack();
-        vista.cargando.setLocationRelativeTo(null);
-        vista.cargando.setVisible(true);
-
-        modelo = new Modelo(bd, usu, pass, ip, port);
-        iniciarModelo();
-    }
-
-    //INICIAMOS LOS MÉTODOS RELACIONADOS CON EL MODELO Y ESTE MÉTODO SERÁ UTILIZADO TRAS LA CONEXIÓN A LA BASE DE DATOS
-    public void iniciarModelo() {
-        //LE AJUSTAMOS A LA TABLA DE PEDIDOS EL RENDERIZADOR MENCIONADO ANTERIORMENTE
-        //ESTO SERVIRÁ PARA DARLE UN ASPECTO LIGERAMENTE MODIFICADO A LA TABLA EN CUESTIÓN
-        render = new TablaRenderizador();
-        vista.tablaPedidos.setDefaultRenderer(String.class, render);
-        vista.tablaPedidos.setModel(modelo.tablaProductosHistorialVacia());
-        vista.tablaPedidos1.setModel(modelo.tablaProductosHistorialVacia());
-        vista.tablaPedidos.getTableHeader()
-                .setReorderingAllowed(false);
-        vista.tablaPedidos.getTableHeader()
-                .setResizingAllowed(false);
-
-        vista.tablaProductosProvee.setDefaultRenderer(String.class, render);
-        vista.tablaProductosProvee.setModel(modelo.tablaProductosProveedoresVacia());
-        vista.tablaProductosProvee.getTableHeader()
-                .setReorderingAllowed(false);
-        vista.tablaProductosProvee.getTableHeader()
-                .setResizingAllowed(false);
-        vista.tablaTrabajadores.getTableHeader()
-                .setReorderingAllowed(false);
-        vista.tablaTrabajadores.getTableHeader()
-                .setResizingAllowed(false);
-    }
-
-
-     */
     /**
      * comprueba que no haya Strings vacios
      *
      * @param parametros strings
      * @return false si es ta vacio
      */
+    /**
+     * comprueba que no haya Strings vacios
+     *
+     * @param a
+     * @param parametros strings
+     * @return false si es ta vacio
+     */
+    public static boolean vacioString(String... a) {
+        for (String a1 : a) {
+            if (a1.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
-
-//    /**
-//     * comprueba que no haya Strings vacios
-//     *
-//     * @param a
-//     * @param parametros strings
-//     * @return false si es ta vacio
-//     */
-//    public static boolean vacioString(String... a) {
-//        for (String a1 : a) {
-//            if (a1.isEmpty()) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }

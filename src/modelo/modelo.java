@@ -6,13 +6,18 @@
 package modelo;
 
 import database.conexion;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,11 +42,11 @@ public class modelo extends conexion {
      */
     public boolean insertarEmpresa(String c, String nom, String dir, String tel, File l) {
         try {
-            String q = "INSERT INTO empresa set CIF='" + c + "', nombre='" + nom + "', direccion='" + dir + "', telefono='" + tel + "', logo='" + l + "'";
+            String q = "INSERT INTO empresa set CIF='" + c + "', nombre='" + nom + "', direccion='" + dir + "', telefono='" + tel + "', logo = ? ";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             FileInputStream fis = new FileInputStream(l);
-            ps.setBinaryStream(3, fis, l.length());
-            ps.execute(); // Ejecuto la consulta
+            ps.setBinaryStream(1, fis, l.length());
+            ps.execute(); // Ejecuto la consulta 
             ps.close();
             return true;
         } catch (SQLException e) {
@@ -49,8 +54,34 @@ public class modelo extends conexion {
         } catch (FileNotFoundException f) {
             //System.err.print(f.getMessage());
         }
-        
+
         return false;
+    }
+
+    public Object[] getEmpresa() {
+        Object[] a = new Object[5];
+        Blob b;
+        try {
+            String q = "select CIF, nombre, direccion, telefono, logo from empresa";
+            PreparedStatement cs = getConexion().prepareStatement(q);
+            ResultSet rs = cs.executeQuery();
+            rs.next();
+            a[0] = rs.getString(1);
+            a[1] = rs.getString(2);
+            a[2] = rs.getString(3);
+            a[3] = rs.getString(4);
+            b = rs.getBlob(5);
+            //convierte el blob en Image
+            byte[] dat = b.getBytes(1, (int) b.length());
+            BufferedImage img = null;
+            img = ImageIO.read(new ByteArrayInputStream(dat));
+            Image e = img;
+            //crea el fichero de la imagen
+            a[4] = e;
+        } catch (Exception e) {
+            //System.err.println(e.getMessage());
+        }
+        return a;
     }
 
     /**
@@ -100,7 +131,7 @@ public class modelo extends conexion {
     }
 
     public int tipoUsuario(String mail) {
-        int s =-1;
+        int s = -1;
         try {
             String q = "select tipo_usuario from usuario where email='" + mail + "'";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
@@ -127,9 +158,9 @@ public class modelo extends conexion {
      * @param mail email del empleado
      * @return
      */
-    public boolean insertarEmpleado(String d, String nom, String ape, String pues, String tel, String f, String mail) {
+    public boolean insertarEmpleado(String d, String nom, String ape, String pues, String tel, String mail) {
         try {
-            String q = "insert into empleado set dni='" + d + "', nombre='" + nom + "', apellidos='" + ape + "', puesto='" + pues + "', telefono='" + tel + "', foto='" + f + "', email='" + mail + "'";
+            String q = "insert into empleado set dni='" + d + "', nombre='" + nom + "', apellidos='" + ape + "', puesto='" + pues + "', telefono='" + tel + "', email='" + mail + "'";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             ps.execute(); // Ejecuto la consulta
             ps.close();
@@ -152,9 +183,9 @@ public class modelo extends conexion {
      * @param mail email del empleado
      * @return true o false
      */
-    public boolean actualizarEmpleado(String d, String nom, String ape, String pues, String tel, String f, String mail) {
+    public boolean actualizarEmpleado(String d, String nom, String ape, String pues, String tel, String mail) {
         try {
-            String q = "update empleado set dni='" + d + "', nombre='" + nom + "', apellidos='" + ape + "', puesto='" + pues + "', telefono='" + tel + "', foto='" + f + "', email='" + mail + "' where dni='" + d + "'";
+            String q = "update empleado set dni='" + d + "', nombre='" + nom + "', apellidos='" + ape + "', puesto='" + pues + "', telefono='" + tel + "',email='" + mail + "' where dni='" + d + "'";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             ps.execute(); // Ejecuto la consulta
             ps.close();
@@ -197,7 +228,7 @@ public class modelo extends conexion {
             }
         };
         int total = 0;
-        String[] columnas = {"Dni", "Nombre", "Apellidos", "Puesto", "Telefono", "Foto", "Email"};
+        String[] columnas = {"Dni", "Nombre", "Apellidos", "Puesto", "Telefono", "Email"};
         try {
             String q = "SELECT count(*) as total FROM empleado";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -211,7 +242,7 @@ public class modelo extends conexion {
         }
         Object data[][] = new String[total][columnas.length]; //Sacamos un array para el nombre de las columnas y otro para los datos de las filas
         try {
-            String q = "SELECT dni, nombre, apellidos, puesto, telefono, foto, email FROM empleado";
+            String q = "SELECT dni, nombre, apellidos, puesto, telefono, email FROM empleado";
             PreparedStatement ps = this.getConexion().prepareStatement(q);
             ResultSet res = ps.executeQuery();
             int i = 0;
@@ -221,8 +252,7 @@ public class modelo extends conexion {
                 data[i][2] = res.getString("apellidos");
                 data[i][3] = res.getString("puesto");
                 data[i][4] = res.getString("telefono");
-                data[i][5] = res.getString("foto");
-                data[i][6] = res.getString("email");
+                data[i][5] = res.getString("email");
                 i++;
             }
             dtm.setDataVector(data, columnas); // Le decimos a la tabla que use el modelo de datos que hemos creado
@@ -277,7 +307,7 @@ public class modelo extends conexion {
             return false;
         }
     }
-    
+
     public boolean existeUsuarioSinPass(String mail) {
         String s = "";
         try {
@@ -562,9 +592,9 @@ public class modelo extends conexion {
      * @param mail Email del trabajador al que se le va a asignar la incidencia
      * @return true o false
      */
-    public boolean insertarIncidencia(String nom, String tip, String img, String fec_suc, String fec_res, String desc, String loc, String est, String prior, String mail) {
+    public boolean insertarIncidencia(String nom, String tip, String fec_suc, String fec_res, String desc, String loc, String est, String prior, String mail) {
         try {
-            String q = "insert into incidencia set nombre='" + nom + "', tipo='" + tip + "', foto='" + img + "', fecha_suceso='" + fec_suc + "', fecha_resolucion='" + fec_res + "', descripcion='"+desc+"', localizacion='"+loc+"', estado="+est+", prioridad="+prior+", email='"+mail+"'";
+            String q = "insert into incidencia set nombre='" + nom + "', tipo='" + tip + "', fecha_suceso='" + fec_suc + "', fecha_resolucion='" + fec_res + "', descripcion='" + desc + "', localizacion='" + loc + "', estado='" + est + "', prioridad='" + prior + "', email='" + mail + "'";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             ps.execute(); // Ejecuto la consulta
             ps.close();
@@ -590,9 +620,9 @@ public class modelo extends conexion {
      * @param mail Email del trabajador al que se le va a asignar la incidencia
      * @return true o false
      */
-    public boolean actualizarIncidencia(String cod, String nom, String tip, String img, String fec_suc, String fec_res, String desc, String loc, String est, String prior, String mail) {
-         try {
-            String q = "update incidencia set nombre='" + nom + "', tipo='" + tip + "', foto='" + img + "', fecha_suceso='" + fec_suc + "', fecha_resolucion='" + fec_res + "', descripcion='"+desc+"', localizacion='"+loc+"', estado="+est+", prioridad="+prior+", email='"+mail+"' where codigo="+cod+"";
+    public boolean actualizarIncidencia(String cod, String nom, String tip, String fec_suc, String fec_res, String desc, String loc, String est, String prior, String mail) {
+        try {
+            String q = "update incidencia set nombre='" + nom + "', tipo='" + tip + "', fecha_suceso='" + fec_suc + "', fecha_resolucion='" + fec_res + "', descripcion='" + desc + "', localizacion='" + loc + "', estado='" + est + "', prioridad='" + prior + "', email='" + mail + "' where codigo=" + cod + "";
             PreparedStatement ps = this.getConexion().prepareStatement(q); //preparo la consulta
             ps.execute(); // Ejecuto la consulta
             ps.close();
@@ -629,14 +659,14 @@ public class modelo extends conexion {
      * @return true o false
      */
     public DefaultTableModel listarIncidencias() {
-         DefaultTableModel dtm = new DefaultTableModel() {
+        DefaultTableModel dtm = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         int total = 0;
-        String[] columnas = {"codigo", "nombre", "tipo", "foto", "fecha_suceso", "fecha_resolucion", "descripcion", "localizacion", "estado", "prioridad", "email"};
+        String[] columnas = {"codigo", "nombre", "tipo", "fecha_suceso", "fecha_resolucion", "descripcion", "localizacion", "estado", "prioridad", "email"};
         try {
             String q = "SELECT count(*) as total FROM incidencia";
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -650,7 +680,7 @@ public class modelo extends conexion {
         }
         Object data[][] = new String[total][columnas.length]; //Sacamos un array para el nombre de las columnas y otro para los datos de las filas
         try {
-            String q = "SELECT codigo, nombre, tipo, foto, fecha_suceso, fecha_resolucion, descripcion, localizacion, estado, prioridad, email FROM incidencia";
+            String q = "SELECT codigo, nombre, tipo, fecha_suceso, fecha_resolucion, descripcion, localizacion, estado, prioridad, email FROM incidencia";
             PreparedStatement ps = this.getConexion().prepareStatement(q);
             ResultSet res = ps.executeQuery();
             int i = 0;
@@ -658,14 +688,13 @@ public class modelo extends conexion {
                 data[i][0] = res.getString("codigo");
                 data[i][1] = res.getString("nombre");
                 data[i][2] = res.getString("tipo");
-                data[i][3] = res.getString("foto");
-                data[i][4] = res.getString("fecha_suceso");
-                data[i][5] = res.getString("fecha_resolucion");
-                data[i][6] = res.getString("descripcion");
-                data[i][7] = res.getString("localizacion");
-                data[i][8] = res.getString("estado");
-                data[i][9] = res.getString("prioridad");  
-                data[i][10] = res.getString("email");
+                data[i][3] = res.getString("fecha_suceso");
+                data[i][4] = res.getString("fecha_resolucion");
+                data[i][5] = res.getString("descripcion");
+                data[i][6] = res.getString("localizacion");
+                data[i][7] = res.getString("estado");
+                data[i][8] = res.getString("prioridad");
+                data[i][9] = res.getString("email");
                 i++;
             }
             dtm.setDataVector(data, columnas); // Le decimos a la tabla que use el modelo de datos que hemos creado
@@ -697,6 +726,59 @@ public class modelo extends conexion {
             //System.err.print(e.getMessage());
         }
         return false;
+    }
+
+    public DefaultComboBoxModel cbEmailEmpleado() {
+        DefaultComboBoxModel com = new DefaultComboBoxModel();
+        try {
+            String q = "SELECT email FROM usuario";
+            PreparedStatement ps = this.getConexion().prepareStatement(q);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                com.addElement(res.getString("email")); // te añade al combobox el resultado de la query
+            }
+            res.close();
+        } catch (SQLException e) {
+            //System.err.println(e.getMessage());
+
+        }
+        return com;
+    }
+
+    public DefaultTableModel tablaBusqueda(String nom) { //tabla de busqueda de jugador por su dni//
+        DefaultTableModel tablaBusqueda = new DefaultTableModel();
+        int fila = 0;
+        String[] nombre = {"DNI", "Nombre", "Apellidos", "Puesto", "Teléfono", "Email"};
+        try {
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(dni) as total FROM empleado");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            fila = res.getInt("total");
+            res.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        Object[][] data = new String[fila][6];
+        try {
+            PreparedStatement ps = this.getConexion().prepareStatement("select dni, nombre, apellidos, puesto, telefono, email from empleado where nombre ='" + nom + "'");
+            ResultSet res = ps.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                data[i][0] = res.getString("dni");
+                data[i][1] = res.getString("nombre");
+                data[i][2] = res.getString("apellidos");
+                data[i][3] = res.getString("puesto");
+                data[i][4] = res.getString("telefono");
+                data[i][5] = res.getString("email");
+                i++;
+            }
+            res.close();
+            tablaBusqueda.setDataVector(data, nombre);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return tablaBusqueda;
+
     }
 
 }
